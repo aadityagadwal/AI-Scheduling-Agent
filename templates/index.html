@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Scheduling Assistant</title>
+</head>
+<body>
+  <h1>Agentic AI Scheduler</h1>
+  <form id="form">
+    <textarea id="input" rows="10" cols="80" placeholder="Paste your input JSON here..."></textarea><br>
+    <button type="submit">Schedule</button>
+  </form>
+  <pre id="output"></pre>
+  <script>
+    document.getElementById('form').onsubmit = async (e) => {
+      e.preventDefault();
+      const input = JSON.parse(document.getElementById('input').value);
+      const res = await fetch('/schedule', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(input)
+      });
+      const out = await res.json();
+      document.getElementById('output').textContent = JSON.stringify(out, null, 2);
+    };
+  </script>
+</body>
+</html>
